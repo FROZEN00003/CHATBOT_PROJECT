@@ -88,6 +88,23 @@ def chat():
     })
 
 
+# Get chat history
+@app.route("/history")
+def history():
+
+    conn = sqlite3.connect("chat_history.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT sender, message FROM chats")
+
+    chats = cursor.fetchall()
+
+    conn.close()
+
+    return jsonify(chats)
+
+
 if __name__ == "__main__":
 
     app.run(debug=True)

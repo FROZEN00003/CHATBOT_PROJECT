@@ -1,3 +1,45 @@
+// Load old chat history
+window.onload = function () {
+
+    fetch("/history")
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        const chatBox = document.getElementById("chat-box");
+
+        data.forEach(chat => {
+
+            const sender = chat[0];
+            const message = chat[1];
+
+            if (sender === "User") {
+
+                chatBox.innerHTML += `
+                    <div class="message user-message">
+                        ${message}
+                    </div>
+                `;
+
+            } else {
+
+                chatBox.innerHTML += `
+                    <div class="message bot-message">
+                        ${message}
+                    </div>
+                `;
+            }
+
+        });
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+    });
+
+};
+
+
 const input = document.getElementById("user-input");
 
 
